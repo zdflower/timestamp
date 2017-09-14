@@ -14,6 +14,7 @@ function getJson(fecha){
       json["unixtime"] = "fechaenformatounixtime"
       json["natural"] = "fechaenformatonatural"
   }
+  return json
 }
 
 
@@ -21,14 +22,19 @@ var server = http.createServer(function (req, resp){
     if (req.method !== 'GET') {
         return res.end('send me a GET\n')
     }
-    var url_obj = url.parse(req.url, true); //"devuelve un objeto con los atributos pertinentes" ???
-
-    //tenés que chequear si está en formato unixtime, natural o ninguno
+    var url_obj = url.parse(req.url, true);
     var fecha = url_obj.pathname
 
-    resp.writeHead(200, { 'Content-Type': 'application/json' })
-    resp.write(JSON.stringify(getJson(fecha)));
-    resp.end();
-        
+    //console.log(url_obj)
+
+    //cuando se pida la página raíz
+    if (url_obj.path == '/'){
+      //tenés que chequear si está en formato unixtime, natural o ninguno
+      resp.writeHead(200, { 'Content-Type': 'application/json' })
+      resp.write(JSON.stringify(getJson(fecha)));
+      resp.end();	
+    }
+ 
 });
-server.listen(Number(process.argv[2]));
+server.listen(3000);
+console.log("Server iniciado");
