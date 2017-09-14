@@ -4,12 +4,12 @@ var url = require('url');
 
 //TODO
 function unixOrNatural(fecha){
-  return false
+  return true
 }
 
 //TODO
 function getJson(fecha){
-  var json = {"unixtime": null, "natural": null};
+  var json = {"fecha": fecha, "unixtime": null, "natural": null};
   if (unixOrNatural(fecha)){
       json["unixtime"] = "fechaenformatounixtime"
       json["natural"] = "fechaenformatonatural"
@@ -27,14 +27,19 @@ var server = http.createServer(function (req, resp){
 
     //console.log(url_obj)
 
-    //cuando se pida la página raíz
+/*    //cuando se pida la página raíz
     if (url_obj.path == '/'){
       //tenés que chequear si está en formato unixtime, natural o ninguno
       resp.writeHead(200, { 'Content-Type': 'application/json' })
       resp.write(JSON.stringify(getJson(fecha)));
       resp.end();	
-    }
- 
+    }*/
+
+    resp.writeHead(200, { 'Content-Type': 'application/json' })
+    resp.write(JSON.stringify(getJson(fecha)));
+    resp.end();
+
+
 });
 server.listen(3000);
 console.log("Server iniciado");
